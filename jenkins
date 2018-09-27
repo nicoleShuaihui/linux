@@ -1,0 +1,8 @@
+
+
+2、运行Jenkins镜像
+docker run --restart unless-stopped  --name myjenkins -p 8080:8080 -p 50000:50000 --env JAVA_OPTS="-Djava.util.logging.config.file=/var/jenkins_home/log.properties" -v `pwd`/jenkins_home/:/var/jenkins_home jenkins
+[root@lin data]# docker run --restart unless-stopped  --name myjenkins -p 8080:8080 -p 50000:50000 --env JAVA_OPTS="-Djava.util.logging.config.file=/var/jenkins_home/log.properties" -v `pwd`/jenkins_home/:/var/jenkins_home jenkins
+touch: cannot touch '/var/jenkins_home/copy_reference_file.log': Permission denied
+Can not write to /var/jenkins_home/copy_reference_file.log. Wrong volume permissions?
+解决方法：chown -R 1000 /data/data/jenkins_home
