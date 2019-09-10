@@ -1,0 +1,3 @@
+#/bin/bash
+#[ -z string ] 表示的是string的长度为零则为真，故为零该逻辑为真不执行
+[ -z `pidof mysql` ] && mysql
