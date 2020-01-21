@@ -45,3 +45,10 @@
  lsblk
 ```
 5、批量解压：for pkg in *.tar.gz; do tar xf $pkg; done
+
+6、关闭swap:
+
+```
+swapoff –a
+sed -i 's/.swap./#&/' /etc/fstabv
+```
