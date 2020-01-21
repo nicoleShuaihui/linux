@@ -52,3 +52,16 @@
 swapoff –a
 sed -i 's/.swap./#&/' /etc/fstabv
 ```
+
+7、输出标题:
+> ps -aux |head  -1;
+
+8、使用xargs ，批量操作
+> kubectl get cm -nouter-dns |grep -v 'NAME' |awk '{print $1}' |xargs kubectl delete cm -n outer-dns
+
+9、查看文件存储
+文件大小查看
+```
+du -sh  ：查看文件的目录总共占的容量
+du -lh --max-depth=1:查看当前目录下一级文件和子目录占用的磁盘容量
+```
