@@ -84,6 +84,7 @@ du -lh --max-depth=1:查看当前目录下一级文件和子目录占用的磁�
 > rpm -ivh name --force --nodeps 
 
 > 查询rpm 包： rpm -qf  `which vim`
+
 -i ：安装的意思
 
 -v ：可视化
@@ -97,3 +98,21 @@ du -lh --max-depth=1:查看当前目录下一级文件和子目录占用的磁�
 --nodeps 当要安装的rpm包依赖其他包时，即使其他包没有安装，也要安装这个包
  
 > yum install test.rpm -y --downloadonly --downloaddir=/usr/local/src 
+
+12、查看系统信息
+
+查看内核：
+
+> 1、cat /proc/version
+
+> 2、uname -a
+
+查看Linux系统版本的命名
+
+> 1、lsb_release -a，即可列出所有版本信息：
+
+PS:适合所有的Linux发行版本
+
+> 2、cat /etc/redhat-release，这种方法只适合Redhat系的Linux：
+
+> 3、cat /etc/issue，此命令也适用于所有的Linux发行版。
