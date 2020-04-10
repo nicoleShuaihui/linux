@@ -1,4 +1,4 @@
-﻿### 准备机器
+﻿# 准备机器
 
 | 机器 | 配置  | 账户密码        | 公网IP          | 内网IP        |
 | ---- | ----- | --------------- | --------------- | ------------- |
@@ -10,14 +10,14 @@
 | b2   | 8C16G | root/Tke@123456 | 129.204.236.25  | 192.168.0.120 |
 | b3   | 8C16G | root/Tke@123456 | 193.112.179.193 | 192.168.0.28  |
 
-### 物料下载
+# 物料下载
 
 ```bash
 cd /opt && wget https://yz-trainning-1253183248.cos.ap-guangzhou.myqcloud.com/cpaas-20200306.tgz
 cd /opt && wget  https://yz-trainning-1253183248.cos.ap-guangzhou.myqcloud.com/TKE-20200323-Tranning/cicd.tar.gz
 ```
 
-### 解压物料
+# 解压物料
 
 ```bash
 tar zxvf cpaas-20200306.tgz -C ./
@@ -26,7 +26,7 @@ tar zxvf cicd.tar.gz -C ./
 
 ## 安装管理集群
 
-### 免密设置（优先）
+# 免密设置（优先）
 
 ```bash
 # init机器上执行生成秘钥对
@@ -39,9 +39,9 @@ ssh-copy-id -p 22 -i ~/.ssh/id_rsa.pub root@192.168.0.88 && ssh-copy-id -p 22 -i
 root/Tke@123456
 ```
 
-### 环境检查
+# 环境检查
 
-#### 初始节点
+## 初始节点
 
 ```bash
 # 快捷操作
@@ -128,7 +128,7 @@ cat /etc/hosts
 chmod 777 /tmp
 ```
 
-#### 全部节点
+## 全部节点
 
 ```bash
 # 系统版本 CentOS 7.6（可跳过）
@@ -186,7 +186,7 @@ for i in 110 109 58 88 120 28 ; do  ssh 192.168.0.$i "cat /etc/hosts" ;  done
 for i in 110 109 58 88 120 28 ; do  ssh 192.168.0.$i "chmod 777 /tmp" ;  done
 ```
 
-### 安装软件
+# 安装软件
 
 ```bash
 # 初始节点
@@ -196,16 +196,16 @@ yum install -y curl tar ip ssh sshpass jq netstat timedatectl ntpdate nslookup b
 for i in 110 109 58 88 120 28 ; do  ssh 192.168.0.$i "yum install -y curl tar ip ssh sshpass jq netstat timedatectl ntpdate nslookup base64 tr head openssl md5sum socat telnet" ;  done
 ```
 
-### 部署 haproxy
+# 部署 haproxy
 
-#### 安装
+## 安装
 
 ```bash
 # 在init节点安装
 yum -y install haproxy
 ```
 
-#### 配置
+## 配置
 
 ```bash
 global
@@ -313,7 +313,7 @@ server s1 192.168.0.109:30902 check port 30902 inter 1000 maxconn 51200
 server s2 192.168.0.58:30902 check port 30902 inter 1000 maxconn 51200
 ```
 
-#### 替换
+## 替换
 
 ```bash
 # 查看
@@ -328,9 +328,9 @@ netstat -tlunp | grep 80 && netstat -tlunp | grep 443 && netstat -tlunp | grep 6
 netstat -tlunp |grep -e "80|443|6443|30900|30902"
 ```
 
-### 安装集群
+# 安装集群
 
-#### 配置文件
+## 配置文件
 
 ```bash
 [
@@ -373,7 +373,7 @@ netstat -tlunp |grep -e "80|443|6443|30900|30902"
 ]
 ```
 
-#### 修改配置
+## 修改配置
 
 ```bash
 # 配置文件
@@ -382,14 +382,14 @@ cd /opt/cpaas && cp server_list_3.json server_list.json
 cd /opt/cpaas && echo "" > server_list.json && vim server_list.json
 ```
 
-####  修改脚本
+##  修改脚本
 
 ```bash
 # 322行  改成 check_node_env=0
 vim /opt/cpaas/up-cpaas.sh
 ```
 
-#### 执行安装
+## 执行安装
 
 ```bash
 # domain-name init节点外网地址
@@ -405,13 +405,13 @@ cd /opt/cpaas
 --use-http
 ```
 
-#### 访问界面
+## 访问界面
 
 ```bash
 http://106.52.130.104  `admin@cpaas.io/password`
 ```
 
-### 清理集群
+# 清理集群
 
 ```bash
 
@@ -419,13 +419,13 @@ http://106.52.130.104  `admin@cpaas.io/password`
 
 ## 安装业务集群
 
-### 安装节点
+# 安装节点
 
 ```bash
 # 看文档
 ```
 
-### 安装helm①
+# 安装helm①
 
 ```bash
 # 在业务集群master上执行
@@ -435,7 +435,7 @@ http://106.52.130.104  `admin@cpaas.io/password`
 4、helm list
 ```
 
-### 安装cert-manager②
+# 安装cert-manager②
 
 ```bash
 # 在业务集群master上执行
@@ -457,15 +457,15 @@ kubectl  delete crd orders.certmanager.k8s.io
 kubectl delete ns cert-manager
 ```
 
-### 安装alauda-cluster-base③
+# 安装alauda-cluster-base③
 
 ```bash
 # 在 global 的第一台 master 节点上执行以下命令
 
 # 1
-### 快捷操作
+# 快捷操作
 ROOT_USERNAME=admin@cpaas.io && REGISTRY_ENDPOINT=$(docker info |grep 60080  |tr -d ' ') && REGION_NAME=cls-2n5t95qk && ACP_NAMESPACE=cpaas-system
-### 详细解释
+# 详细解释
 ROOT_USERNAME=admin@cpaas.io  ## 默认为admin@cpaas.io，需要与登录global界面时使用的邮箱一致。
 REGISTRY_ENDPOINT=$(docker info |grep 60080  |tr -d ' ')
 REGION_NAME=cls-2n5t95qk ## 想要部署 alauda-cluster-base 的集群的名字，需要自行修改,tke集群名获取可从页面获取
@@ -509,9 +509,9 @@ REGION_NAME=cls-2n5t95qk
 kubectl delete -f /tmp/region_helmrequest/${REGION_NAME}-alauda-cluster-base.yaml
 ```
 
-### 安装prometheus ④
+# 安装prometheus ④
 
-#### 1.准备工作
+## 1.准备工作
 
 ```bash
 # 1.准备工作，监控 etcd 先判断 etcd-ca 是否存在，在要部署普罗米修斯的集群的 master 节点操作
@@ -528,13 +528,13 @@ kubectl create secret tls etcd-ca --cert=/etc/kubernetes/pki/etcd/ca.crt --key=/
 kubectl create secret tls etcd-peer --cert=/etc/kubernetes/pki/etcd/peer.crt --key=/etc/kubernetes/pki/etcd/peer.key -n cpaas-system
 ```
 
-#### 2.安装 prometheus-operator
+## 2.安装 prometheus-operator
 
 ```bash
 # 1 在要部署的业务集群的第一台 master 节点上执行以下命令
-### 快捷操作 
+# 快捷操作 
 REGISTRY_ENDPOINT=$(docker info |grep 60080  |tr -d ' ') && REGION_NAME=cls-2n5t95qk && ACP_NAMESPACE=cpaas-system
-### 详细解释
+# 详细解释
 REGISTRY_ENDPOINT=$(docker info |grep 60080  |tr -d ' ')
 REGION_NAME=cls-2n5t95qk ## 想要部署 alauda-cluster-base 的集群的名字，需要自行修改
 ACP_NAMESPACE=cpaas-system ## 改成部署时， --acp2-namespaces 参数指定的值，默认是cpaas-system
@@ -548,7 +548,7 @@ helm install --version $(helm search | grep '^stable/prometheus-operator ' | awk
              stable/prometheus-operator --wait --timeout 3000
 ```
 
-#### 3.安装 kube-prometheus
+## 3.安装 kube-prometheus
 
 ```bash
 # 1.给集群中的一个 node（不能是master节点） 添加 monitoring=enabled 的 label，用于 local volume 的调度。
@@ -563,9 +563,9 @@ kubectl label --overwrite nodes ${test} monitoring=enabled
 mkdir -p /cpaas/monitoring/{grafana,prometheus,alertmanager} && chmod -R 777 /cpaas/monitoring
 
 # 3.下面的操作在要部署的业务集群的第一台 master 节点上操作，执行如下命令
-### 快捷操作
+# 快捷操作
 REGISTRY_ENDPOINT=$(docker info |grep 60080  |tr -d ' ') && DOMAIN_NAME=106.52.130.104 && REGION_NAME=cls-2n5t95qk && ACP_NAMESPACE=cpaas-system
-### 详细解释
+# 详细解释
 REGISTRY_ENDPOINT=$(docker info |grep 60080  |tr -d ' ')
 DOMAIN_NAME=106.52.130.104 ## 需要修改为 global 界面的访问地址，也就是部署 global 的时候，--domain-name 参数的值
 REGION_NAME=cls-2n5t95qk ## 想要部署 alauda-cluster-base 的集群的名字
@@ -590,7 +590,7 @@ helm install --version $(helm search | grep '^stable/kube-prometheus ' | awk '{p
              stable/kube-prometheus
 ```
 
-#### 4.安装失败清理
+## 4.安装失败清理
 
 ```bash
 # 清理操作(如果需要重装监控组件,则执行此操作。包含：prometheus-operator、kube-prometheus)
@@ -609,21 +609,21 @@ kubectl get pv -n cpaas-system
 kubectl patch pv alertmanager-pv -p '{"metadata":{"finalizers":null}}'
 ```
 
-#### 5.检查安装情况
+## 5.检查安装情况
 
 ```bash
 # 查看所有 pod 是否正常启动（pod 为 Running 或者 Completed 状态），在部署普罗米修斯的集群的 master 节点上执行以下命令
 kubectl get pods -n cpaas-system | grep prometheus
 ```
 
-#### 6.集群对接监控
+## 6.集群对接监控
 
 ```bash
 # 1.在部署普罗米修斯的集群的 master 节点上操作
 
-### 快捷操作
+# 快捷操作
 ip=106.52.130.11 && ACP_NAMESPACE=cpaas-system
-###
+#
 ip=192.168.122.30 ## 需要修改为业务集群任意一个 master 节点的外网 ip，若没有外网地址，使用默认的实际ip
 ACP_NAMESPACE=cpaas-system ## 改成部署时， --acp2-namespaces 参数指定的值，默认是cpaas-system
 
@@ -654,7 +654,7 @@ eof
 kubectl apply -f /tmp/prometheus-feature.yaml
 ```
 
-#### 7.修改k8s配置
+## 7.修改k8s配置
 
 ```bash
 # 业务集群所有master节点,修改kubernetes 配置文件
@@ -675,17 +675,17 @@ kubectl delete pod kube-proxy-d27gc kube-proxy-fmfs4 kube-proxy-q2q4n -n kube-sy
 # kubectl get pods kube-proxy-lsblp -n kube-system -o yaml
 ```
 
-### 安装jenkins ⑤
+# 安装jenkins ⑤
 
 ```bash
 # 1.在业务集群以本地路径的方式部署 jenkins，（对接了GitLab）。
 
-### 如何获取token，到devops-apiserver所在集群（一般为global集群）执行
+# 如何获取token，到devops-apiserver所在集群（一般为global集群）执行
 ACP_NAMESPACE=cpaas-system ; echo $(kubectl get secret -n ${ACP_NAMESPACE} $(kubectl get secret -n ${ACP_NAMESPACE} | grep devops-apiserver-token |awk '{print $1}') -o jsonpath={.data.token} |base64 --d) 
 
-### 快捷操作
+# 快捷操作
 NODE_NAME="192.168.0.120" && global_vip="192.168.0.7" && path="/cpaas/data/jenkins" && password="Jenkins12345" && REGISTRY=$(docker info |grep 60080  |tr -d ' ') && ACP_NAMESPACE=cpaas-system && TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjcGFhcy1zeXN0ZW0iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiZGV2b3BzLWFwaXNlcnZlci10b2tlbi16dng5ZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJkZXZvcHMtYXBpc2VydmVyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNjAzNTdmYjAtNmU0YS0xMWVhLTg2ZDQtNTI1NDAwODZhMWVhIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmNwYWFzLXN5c3RlbTpkZXZvcHMtYXBpc2VydmVyIn0.AQgGCUnn9RdX6-I_Y72sQr5wdB4jJdo4hZNPMbr504-BPuJCwatp1E3lFIk_7uBOrHUVVWrhmom0R3ZUBi2ukKOQ3qQQe8w98LHSP4DJXc1gHc02gzSi0ODnSNGvT0rZp5NNBkqav9784UoT5IJ-dYb1_RdgGjEeeupOLwmQvLEumw-JCAnyh0Q0sLYVkKrSx_EDx3HjnAfiCb50syWdLUB7_IBRdRqYOvmvAkQ4jgVrIG4MFnJUIjoaRjtEuO4qEyrU__PKXwfOUXRjFjTXbOIz9uat5OyJs5MyDFZjPAWg6UpmhrQOBhqBX8KzN9J8OBL885oexvTK9K-0mE1Ghw
-### 详细解释
+# 详细解释
 NODE_NAME="192.168.0.120"  ##需要修改为集群中实际存放jenkins数据的某个节点的hostname
 global_vip="192.168.0.7" ##需要修改为平台的访问地址，如果访问地址是域名，就必须配置成域名，因为 jenkins 需要访问 global 平台的 erebus，如果平台是域名访问的话，erebus 的 ingress 策略会配置成只能域名访问。
 path="/cpaas/data/jenkins" ##默认数据目录为/root/alauda/jenkins，若有需要可更改。
@@ -763,7 +763,7 @@ http://192.168.0.120:32001
 jenkins-demo
 ```
 
-### 安装gitlab ⑥
+# 安装gitlab ⑥
 
 ```bash
 # 1
@@ -819,7 +819,7 @@ http://192.168.0.88:31101
 gitlab-demo
 ```
 
-### 安装harbor ⑦
+# 安装harbor ⑦
 
 ```bash
 # 1
@@ -828,12 +828,12 @@ gitlab-demo
 REGISTRY=$(docker info |grep 60080  |tr -d ' ') && NODE_IP="192.168.0.88" && NODE_NAME="192.168.0.28" &&HOST_PATH=/cpaas/data/harbor && harbor_password="Harbor12345" && db_password="Harbor4567"  && redis_password="Redis789"
 # 详细解释
 REGISTRY=$(docker info |grep 60080  |tr -d ' ')
-NODE_IP="192.168.0.88"  ###此参数为部署时指定的访问地址，写当前集群中任意一个master节点的ip即可
-NODE_NAME="192.168.0.28"  ###需要修改为选择部署harbor节点的hostname
-HOST_PATH=/cpaas/data/harbor###这个目录为harbor的数据目录路径，一般不需要修改，若有别的规划，可修改。
-harbor_password="Harbor12345" ####harbor的密码，默认不需要修改，若有规划，可改
-db_password="Harbor4567"      ####harbor数据库的密码，默认不需要修改，若有规划，可改
-redis_password="Redis789"     ###harbor的redis的密码，默认不需要修改，若有规划，可改
+NODE_IP="192.168.0.88"  #此参数为部署时指定的访问地址，写当前集群中任意一个master节点的ip即可
+NODE_NAME="192.168.0.28"  #需要修改为选择部署harbor节点的hostname
+HOST_PATH=/cpaas/data/harbor#这个目录为harbor的数据目录路径，一般不需要修改，若有别的规划，可修改。
+harbor_password="Harbor12345" ##harbor的密码，默认不需要修改，若有规划，可改
+db_password="Harbor4567"      ##harbor数据库的密码，默认不需要修改，若有规划，可改
+redis_password="Redis789"     #harbor的redis的密码，默认不需要修改，若有规划，可改
 
 # 2
 helm install --name harbor --namespace default stable/harbor \
@@ -917,15 +917,15 @@ kubectl get pod --all-namespaces | awk '{if ($4 != "Running" && $4 != "Completed
 
 ## 常见问题
 
-### 集群管理页面404
+# 集群管理页面404
 
-#### 错误信息
+## 错误信息
 
 ```bash
 tke stable/tke v2.6.9 cpaas-system 6h Failed
 ```
 
-#### 修正操作
+## 修正操作
 
 ```bash
 # 访问 `http://106.52.130.104/console-cluster` 404报错
@@ -936,15 +936,15 @@ tke stable/tke v2.6.9 cpaas-system 6h Failed
 5、kubectl captain create --version $(helm search | grep '^stable/tke ' | awk '{print $2}') --configmap=tke-config --namespace=cpaas-system tke --chart=stable/tke
 ```
 
-### helm list报错
+# helm list报错
 
-#### 错误信息
+## 错误信息
 
 ```bash
 Error: configmaps is forbidden: User "system:serviceaccount:kube-system:default" cannot list resource "configmaps" in API group "" in the namespace "kube-system"
 ```
 
-#### 修正操作
+## 修正操作
 
 ```bash
 # 报以上错误请用以下命令加权限
@@ -955,7 +955,7 @@ Error: configmaps is forbidden: User "system:serviceaccount:kube-system:default"
 
 
 
-### K8S常见命令
+# K8S常见命令
 
 ```bash
 # 获取所有命名空间
