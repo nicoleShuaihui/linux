@@ -116,3 +116,58 @@ PS:适合所有的Linux发行版本
 > 2、cat /etc/redhat-release，这种方法只适合Redhat系的Linux：
 
 > 3、cat /etc/issue，此命令也适用于所有的Linux发行版。
+
+13、查看某个包
+
+–yum provides <程序名>
+
+14、mysql查看id是否为自增的
+
+> 查看是否有自增：SELECT auto_increment FROM information_schema.`TABLES` WHERE TABLE_SCHEMA='tdsql_oss' AND TABLE_NAME='tdsql_spec_config';
+
+> 修改表结构：ALTER TABLE tdsql_spec_config CHANGE id id int(10) NOT NULL auto_increment ;
+
+> 查看创建表结构:show create table tdsql_spec_config;
+
+> 对比工具：vim -d file1 file2 / vimdiff file1 file2
+
+15、查看tdsql的问题逻辑
+
+'''
+在keeper节点
+su - tdsql
+cd /data/scheduler/bin && ./resource_tool status_res all    # 得到的是所有DB母机的信息，包括已经使用的端口、隔离的端口、有故障的端口等
+'''
+
+16、ls查看信息
+
+'''
+
+1) ls -lt  时间最近的在前面
+
+2) ls -ltr 时间从前到后
+
+3) 利用sort
+
+    ls -l | sort +7 (日期为第8列)   时间从前到后
+
+    ls -l | sort -r +7      时间最近的在前面
+'''
+
+17、xshell
+
+alt+a ：取消总在最前面 
+shift+a:总在最前面
+
+18、
+
+kubectl get cm -n tdsql |grep -v "NAME" |awk '{print $1}' |xargs kubectl delete cm -n tdsql
+kubectl get cm tdsql.cm.supervisord -n tdsql -o yaml
+
+19、
+
+ulimit -n ：可以查看当前的最大打开文件数
+
+20、系统配置参数生效
+
+sysctl -p
