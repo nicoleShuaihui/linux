@@ -119,7 +119,7 @@ PS:适合所有的Linux发行版本
 
 13、查看某个包
 
-–yum provides <程序名>
+> yum provides <程序名>
 
 14、mysql查看id是否为自增的
 
@@ -152,6 +152,7 @@ cd /data/scheduler/bin && ./resource_tool status_res all    # 得到的是所有
     ls -l | sort +7 (日期为第8列)   时间从前到后
 
     ls -l | sort -r +7      时间最近的在前面
+
 '''
 
 17、xshell
