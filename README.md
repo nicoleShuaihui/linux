@@ -175,12 +175,4 @@ ulimit -n ：可以查看当前的最大打开文件数
 
 sysctl -p
 
-21、
 
-### 序列图 ([语法](https://github.com/bramp/js-sequence-diagrams/blob/master/src/grammar.jison))
-
-```sequence
-小明->小李: 你好 小李, 最近怎么样?
-Note right of 小李: 小李想了想
-小李-->小明: 还是老样子
-```
