@@ -133,18 +133,15 @@ PS:适合所有的Linux发行版本
 
 15、查看tdsql的问题逻辑
 
-'''
-
+```
 在keeper节点
 su - tdsql
 cd /data/scheduler/bin && ./resource_tool status_res all    # 得到的是所有DB母机的信息，包括已经使用的端口、隔离的端口、有故障的端口等
-
-'''
+```
 
 16、ls查看信息
 
-'''
-
+```
 1) ls -lt  时间最近的在前面
 
 2) ls -ltr 时间从前到后
@@ -154,24 +151,20 @@ cd /data/scheduler/bin && ./resource_tool status_res all    # 得到的是所有
     ls -l | sort +7 (日期为第8列)   时间从前到后
 
     ls -l | sort -r +7      时间最近的在前面
+```
 
-'''
-
-17、xshell
-
-alt+a ：取消总在最前面 
-shift+a:总在最前面
-
-18、
+17、
 
 > kubectl get cm -n tdsql |grep -v "NAME" |awk '{print $1}' |xargs kubectl delete cm -n tdsql
 > kubectl get cm tdsql.cm.supervisord -n tdsql -o yaml
 
-19、
+18、
 
 ulimit -n ：可以查看当前的最大打开文件数
 
-20、系统配置参数生效
+19、系统配置参数生效
 
 sysctl -p
 
+20、
+（[软件不容易用到快捷键](https://github.com/nicoleShuaihui/linux/issues/28#issue-599439238)
