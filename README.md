@@ -137,11 +137,13 @@ PS:适合所有的Linux发行版本
 在keeper节点
 su - tdsql
 cd /data/scheduler/bin && ./resource_tool status_res all    # 得到的是所有DB母机的信息，包括已经使用的端口、隔离的端口、有故障的端口等
+
 ```
 
 16、ls查看信息
 
 ```
+
 1) ls -lt  时间最近的在前面
 
 2) ls -ltr 时间从前到后
@@ -151,6 +153,7 @@ cd /data/scheduler/bin && ./resource_tool status_res all    # 得到的是所有
     ls -l | sort +7 (日期为第8列)   时间从前到后
 
     ls -l | sort -r +7      时间最近的在前面
+
 ```
 
 17、
