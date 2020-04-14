@@ -134,9 +134,11 @@ PS:适合所有的Linux发行版本
 15、查看tdsql的问题逻辑
 
 '''
+
 在keeper节点
 su - tdsql
 cd /data/scheduler/bin && ./resource_tool status_res all    # 得到的是所有DB母机的信息，包括已经使用的端口、隔离的端口、有故障的端口等
+
 '''
 
 16、ls查看信息
@@ -162,8 +164,8 @@ shift+a:总在最前面
 
 18、
 
-kubectl get cm -n tdsql |grep -v "NAME" |awk '{print $1}' |xargs kubectl delete cm -n tdsql
-kubectl get cm tdsql.cm.supervisord -n tdsql -o yaml
+> kubectl get cm -n tdsql |grep -v "NAME" |awk '{print $1}' |xargs kubectl delete cm -n tdsql
+> kubectl get cm tdsql.cm.supervisord -n tdsql -o yaml
 
 19、
 
@@ -172,3 +174,11 @@ ulimit -n ：可以查看当前的最大打开文件数
 20、系统配置参数生效
 
 sysctl -p
+
+21、
+
+```sequence
+小明->小李: 你好 小李, 最近怎么样?
+Note right of 小李: 小李想了想
+小李-->小明: 还是老样子
+```
