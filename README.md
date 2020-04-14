@@ -169,5 +169,4 @@ ulimit -n ：可以查看当前的最大打开文件数
 
 sysctl -p
 
-20、
-（[软件不容易用到快捷键](https://github.com/nicoleShuaihui/linux/issues/28#issue-599439238)
+20、[软件不容易用到快捷键](https://github.com/nicoleShuaihui/linux/issues/28#issue-599439238)
