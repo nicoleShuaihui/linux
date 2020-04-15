@@ -1,6 +1,26 @@
 # linux
 一些常用且提升效率的Linux命令
 
+最新：20200415
+
+1、df -hT 查看磁盘类型与大小
+
+2、sed -i '/UUID/d' /etc/fstab  查找某行字符包含的内容，并删除
+
+3、分区挂载
+
+```
+
+parted -s /dev/sdb mk1abe1 g0pt
+parted -s /dev/sdb mkpart primary 0% 100%
+mkfs.xfs /dev/sdb
+echo "dev/sdb1 /data1 xfs defaults 0 0" >>/etc/fstab
+```
+4、grep /data$ $，表示以某个字符结尾
+
+
+
+
 1.grep -I etcd -R 递归查询某文件的内容
 
 2.for i in {0..9};do 实施的命令；done 循环实施某个命令
