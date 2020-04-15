@@ -1,8 +1,0 @@
-#!/bin/bash
-mydir=$(cd $(dirname "$0") && pwd)
-app="$1"
-if [[ -z "$app" ]];then
-    echo "Usage: $0 appname|all"
-    exit 1
-fi
-$mydir/pkgadmin.py start "$app" 
