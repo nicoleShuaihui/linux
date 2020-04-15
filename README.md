@@ -18,6 +18,7 @@ echo "dev/sdb1 /data1 xfs defaults 0 0" >>/etc/fstab
 ```
 4、grep /data$ $，表示以某个字符结尾
 
+----
 
 
 
