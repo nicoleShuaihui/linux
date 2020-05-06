@@ -5,4 +5,15 @@ if [[ -z "$app" ]];then
     echo "Usage: $0 appname|all"
     exit 1
 fi
-$mydir/pkgadmin.py start "$app" 
+$mydir/pkgadmin.py start "$app"
+
+创建一个用户
+#create user
+uexist=$(cat /etc/passwd | cut -f1 -d':' | grep -w "$USER" | wc -l)
+if [ $uexist -le 0 ];then
+  useradd -g $GROUP $USER && passwd -d $USER && echo "create user $USER success"
+else
+  echo "user $USER already created"
+fi
+ctsdb=`sed '/^ctsdb=/!d;s/.*=//' $1 | sed 's/\r//g'`
+ctsdbList=${ctsdb// /,}

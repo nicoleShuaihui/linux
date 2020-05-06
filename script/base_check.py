@@ -61,4 +61,30 @@ def mem_capcity():
             return "error"
     except:
         return "error"
-
+def validation_yum():
+    """
+    检查是否存在可用的yum源，有则返回True，没有则返回False
+    """
+    f = os.popen('yum list| wc -l')
+    yum_list_count = int(f.read().strip('\n'))
+    if yum_list_count > 500:
+        return True
+    else:
+        return False
+def validation_dir(dir_path='/data/application'):
+    '检测相关目录是否存在，不存在则创建'
+    if not os.path.exists(dir_path):
+        if not os.path.exists('/data'):
+            os.mkdir('/data')
+        os.mkdir('/data/application')
+def install_jdk(jkd_name,jdk_rpm_path):
+    """
+    安装jdk
+    """
+    jdk_rpm_path = './rpm/' + jkd_name   
+    shell_command = 'rpm -ivh %s' %(jdk_rpm_path) 
+    os.system(shell_command)
+    if os.path.exists('/usr/bin/java'):
+        return 1
+    else:
+        return 0
