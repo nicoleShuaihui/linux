@@ -19,6 +19,45 @@ echo "dev/sdb1 /data1 xfs defaults 0 0" >>/etc/fstab
 4、grep /data$ $，表示以某个字符结尾
 
 5、xfs_info 文件目录
+
+6、cat filename |sort -f -k2 -t '-'|sort -f
+
+```
+-f:安装字母排序
+-k：与-t连用，-t安装某个字符截断，第二部分的字母进行排序
+length 字符串长度
+length函数返回没有参数的字符串的长度。length函数返回整个记录中的字符数。
+echo "123" | awk '{print length}'
+
+[root@hdfs-10-10-129-138 /home]# cat 123 |awk '{print $1}'
+wang
+cui
+zhao
+liu
+liu
+chang
+li
+[root@hdfs-10-10-129-138 /home]# cat 123 |awk '{print $1,$2}'
+wang 4
+cui 3
+zhao 4
+liu 3
+liu 3
+chang 5
+li 2
+[root@hdfs-10-10-129-138 /home]# cat 123 |awk '{print $1 $2}'
+wang4
+cui3
+zhao4
+liu3
+liu3
+chang5
+li2
+[root@hdfs-10-10-129-138 /home]# cat 123 |awk 'END{print NR}'
+7
+
+
+```
 ##
 
 
