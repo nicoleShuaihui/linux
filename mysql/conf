@@ -1,0 +1,86 @@
+主：
+[client]
+default-character-set   = utf8
+
+[mysql]
+default-character-set   = utf8
+
+
+[mysqld]
+## 常规配置
+character-set-server = utf8
+collation-server = utf8_general_ci
+max_connections = 2000
+
+port = 3306
+socket = /var/lib/mysql/mysql.sock
+skip-external-locking
+key_buffer_size = 384M
+max_allowed_packet = 1M
+table_open_cache = 512
+sort_buffer_size = 2M
+read_buffer_size = 2M
+read_rnd_buffer_size = 8M
+myisam_sort_buffer_size = 64M
+thread_cache_size = 8
+query_cache_size = 32M
+
+# 调整为机器内存的 50%
+innodb_buffer_pool_size = 8132702K
+
+innodb_log_file_size = 256M
+innodb_flush_log_at_trx_commit = 1
+innodb_flush_method = O_DIRECT
+
+## 主从配置
+log-bin=mysql-bin
+binlog_format=mixed
+
+# 需要在一套主从同步的 MySQL 服务器之间唯一
+server-id = 1
+sql_mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+
+从：
+
+[client]
+default-character-set   = utf8
+
+[mysql]
+default-character-set   = utf8
+
+
+[mysqld]
+## 常规配置
+character-set-server = utf8
+collation-server = utf8_general_ci
+max_connections = 2000
+
+port = 3306
+socket = /var/lib/mysql/mysql.sock
+skip-external-locking
+key_buffer_size = 384M
+max_allowed_packet = 1M
+table_open_cache = 512
+sort_buffer_size = 2M
+read_buffer_size = 2M
+read_rnd_buffer_size = 8M
+myisam_sort_buffer_size = 64M
+thread_cache_size = 8
+query_cache_size = 32M
+
+# 调整为机器内存的 50%
+innodb_buffer_pool_size = 8132708K
+
+#脚本中获取服务器中的内存的50%
+
+innodb_log_file_size = 256M
+innodb_flush_log_at_trx_commit = 1
+innodb_flush_method = O_DIRECT
+
+## 主从配置
+log-bin=mysql-bin
+binlog_format=mixed
+
+# 需要在一套主从同步的 MySQL 服务器之间唯一
+server-id = 2
+sql_mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
