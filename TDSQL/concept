@@ -2,9 +2,20 @@
 2、云数据库管理平台：名租户平台，租户端（用户）
 3、实例：最小单位的数据库服务集合。享有数据IP，资源隔离，可包含多个用户。
    实例ID：SET_ID,赤兔平台上面的唯一标识。
-4、非分布式实例：CPU密集型 SQL引擎模块，分布式复杂SQL处理
+4、(1)非分布式实例：又名关系型实例,CDB、RDS、noshard 实例,CPU密集型 SQL引擎模块，分布式复杂SQL处理,mysql 实例 是指完全兼容开 源（如 MySQL）语法的数据库实例。在 TDSQL 中，仅有 1 个 SET 组成实例就是非分布式实例， 其实例 ID 通常以 set 开头。
+   (2分布式关系型实例:又名DCDB、DRDS、TDSQL、gs 实例、groupshard 实例、 shard 实例等，是指基于分布式架构组成的实例，通常 90%兼容 MySQL。在 TDSQL 中，有多 个 SET 组成的实例就是非分布式实例，其实例 ID 通常以 Group 开头) （环境刚刚搭建完成就会有一个group）
 5、TDSQL组件作用：
    keeper 会连接zk的信息
    shark-mc ：客户层面接入
    dcdb:分布式
    mariadb：非分布式
+6、TDSQL三大模块
+ （1）DB节点：set,包括了master+slave，是基于mysql的replication复制协议
+ （2）SQL引擎节点：TDSQL整体的接入层，无主备之分,CPU要求较高
+      作用：权限校验，读写分离，语法分析，词法分析，路由选择，分布式事务，全局自增，统计信息，聚合函数，协议模拟
+  (3) 管理系列模块：赤兔平台，监控/数据采集，OSS，zookeeper,manager,schedule
+7、容灾切换的过程
+   过程：1.主DB降级为从机-》其他上报最新的 binlog文件-》schedule选举最大的 binlog节点，重建主备，修改路由，发送给主机
+   
+8、数据备份
+方式：1、增量（实时备份binlog日志实现增量）2.全量（零点全量，物理，逻辑）
