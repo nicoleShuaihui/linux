@@ -1,0 +1,7 @@
+[CentOS_Everything]
+name=CentOS_Everything
+baseurl=http://172.23.54.28:81/
+path=/
+enabled=1
+gpgcheck=0
+
