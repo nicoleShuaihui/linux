@@ -1,1 +1,0 @@
-只知道某张表，查找某个库：SELECT table_schema FROM information_schema.TABLES WHERE table_name = '表名';
