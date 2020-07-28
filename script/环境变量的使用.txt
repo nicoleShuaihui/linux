@@ -1,0 +1,14 @@
+变量简谈：
+1、在当前shell加入永久环境变量生效需要重新打开shell开启，因为当打开一个shell时，便会加载这个变量。不重新打开shell，是因为永久环境变量并没有加载到当前的shell
+2、当前shell的临时环境变量， 能被自己及其子进程(子shell进程, 子脚本进程或者子C程序进程)访问， 但不能被其它shell访问(相互独立)。在实际大型的软件开发中， 编译大工程， 经常需要用到临时环境变量。
+
+例如：
+a.conf
+a_ip="10.10.10.10"
+
+b.sh
+#! /bin/bash
+current_dir=$( cd `dirname $0` && pwd )
+source ${current_dir}/aa.conf #这里获取到aa.conf文件的中变量
+for i in ${aa_ip[@]};do echo "$i"; done #可以将上一个文件中获取的到变量引用在该位置上面
+
