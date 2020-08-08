@@ -41,6 +41,8 @@ d wq   可以取消挂载
 
 8、删除空行：:g/^$/d
 
+9、查看grep的前后行5行 -C 5，后5行，-A 5，前5行 -B 5
+
 ```
 -f:安装字母排序
 -k：与-t连用，-t安装某个字符截断，第二部分的字母进行排序
@@ -52,6 +54,16 @@ cp -f /etc/nginx/nginx.conf{,.backup}
 1、Linux查看系统开机时间
 last reboot:可以看到Linux系统历史启动的时间
 who -b: 查看最后一次系统启动的时间
+
+update 更新两个字段需要用逗号隔开
+*** 通过表查看数据库
+SELECT table_schema FROM information_schema.TABLES WHERE table_name = '表名';
+
+*** 通过找字段再找表
+
+
+use information_schema;
+select * from columns where column_name='字段名' ;
 
 ```
 ##
