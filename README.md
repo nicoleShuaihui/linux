@@ -9,6 +9,14 @@ array=(bill   chen  bai   hu);
 
 num=${#array[@]}  //获取数组元素的个数
 
+20200815
+
+脚本写入定时任务：
+
+```
+touch /var/spool/cron/root && grep 'check_scheduler_alive' /var/spool/cron/root || echo '*/3 * * * * /bin/bash /server/scripts/check_scheduler_alive.sh' >> /var/spool/cron/root
+
+```
 
 
 最新：20200415
