@@ -14,15 +14,68 @@ num=${#array[@]}  //获取数组元素的个数
 脚本写入定时任务：
 
 ```
-touch /var/spool/cron/root && grep 'check_scheduler_alive' /var/spool/cron/root || echo '*/3 * * * * /bin/bash /server/scripts/check_scheduler_alive.sh' >> /var/spool/cron/root
+1、touch /var/spool/cron/root && grep 'check_scheduler_alive' /var/spool/cron/root || echo '*/3 * * * * /bin/bash /server/scripts/check_scheduler_alive.sh' >> /var/spool/cron/root
+
+LINUX 查看某个指定时间段的日志
+2、sed -n '/Jun 17 13:39:54/ , /Jun 18 10:50:28/p' kern.log
+3、grep '2019-03-02 11:4[1-2]' user-center.2019-03-02.log
+4、修改hostname :hostname 名称 .su生效,su的作用是：变更其他使用者的身份，除root外，输入其他使用者的密码
 
 ```
 
+5、怎么写提示性的用法
+
+```
+function Usage()
+{
+        echo "$0 install|update"
+}
+
+if [ $# == 0 ];then
+        Usage;
+        exit 1;
+fi
+
+cmd=$1
+if [ "$cmd" != "install" -a "$cmd" != "update" ];then
+        Usage;
+        exit 1;
+fi
+
+```
+
+关于用户ulimit的一些疑问
+
+1、ulimit -HSn 600000
+
+H：硬限制；S 软限制; 后置为限制的值
+
+
+2、umask 0022
+
+3、ulimit -c unlimited
+
+4、ulimit -n 200000 2>/dev/null
+
+
+```
+shell注释说明：如果遇见大量的代码，可以使用定义函数，但是不调用，
+ 
+if [ $# != 1 ] ; then
+ echo "USAGE: $0 conf"
+    exit 1;
+fi
+
+$#:表示传值的个数
+$0:表示文件名
+$?:表示上个命令退出的状态
+$$:表示PID
+```
 
 最新：20200415
 
 1、df -hT 查看磁盘类型与大小
-
+i
 2、sed -i '/UUID/d' /etc/fstab  查找某行字符包含的内容，并删除
 
 3、分区挂载
