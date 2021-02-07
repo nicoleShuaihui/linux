@@ -1,0 +1,28 @@
+#!/bin/sh
+
+cd $(dirname $0)
+
+export DB_HOST=127.0.0.1
+
+export DB_PORT=3306
+
+export DB_USER=root
+
+export DB_PASS=123456
+
+
+## execute sql file
+
+db_init() {
+
+        for sql in *.sql; do
+
+                echo $sql ---------
+
+                mysql -h${DB_HOST} -P${DB_PORT} -u${DB_USER} -p${DB_PASS} < $sql
+
+        done
+
+}
+
+db_init
