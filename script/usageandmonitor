@@ -1,0 +1,52 @@
+#可以判断文件或者文件夹是否存在
+test -e ||{}
+
+if [ 变量 -ne 1 ]
+then
+	
+fi
+
+
+#!/bin/sh
+export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/hadoop/bin:/root/bin:/usr/bin:/usr/sbin:/sbin:/bin:.
+
+rootdir=/data1/monitorlog
+if (( `df -h | awk '{print $NF}' | grep -w "/data1" | wc -l` == 0 ));then
+	rootdir=/data/monitorlog
+fi
+
+#iotop
+ps -ef | grep "iotop -d 2 -o -P -t" | grep -v grep | awk '{print $2}' | xargs kill -9 2>/dev/null
+mkdir -p ${rootdir}/iotoplog 
+nohup iotop -d 2 -o -P -t >>${rootdir}/iotoplog/iotoplog.`date '+%Y%m%d'` 2>&1 &
+
+#top
+ps -ef | grep "top -d3 -b" | grep -v grep | awk '{print $2}' |head -n1| xargs kill -9 2>/dev/null
+mkdir -p ${rootdir}/toplog 
+nohup top -d3 -b -c -w1024 >>${rootdir}/toplog/toplog.`date '+%Y%m%d'` 2>&1 &
+
+#dstat
+ps -ef | grep "dstat -t -a --proc-count" | grep -v grep | awk '{print $2}' | xargs kill -9 2>/dev/null
+mkdir -p ${rootdir}/dstatlog 
+nohup dstat -t -a --proc-count -i -l -m -p  --aio --disk-util  >>${rootdir}/dstatlog/dstatlog.`date '+%Y%m%d'` 2>&1 &
+
+#iostat
+ps -ef | grep "iostat -t -x -m 1" | grep -v grep | awk '{print $2}' | xargs kill -9 2>/dev/null
+mkdir -p ${rootdir}/iostatlog 
+nohup  iostat -t -x -m 1  >>${rootdir}/iostatlog/iostatlog.`date '+%Y%m%d'` 2>&1 &
+
+#vmstat
+ps -ef | grep "vmstat -t -w 1" | grep -v grep | awk '{print $2}' | xargs kill -9 2>/dev/null
+test -d ${rootdir}/vmstat || mkdir -p ${rootdir}/vmstat
+vmstat -t -w 1 >>${rootdir}/vmstat/vmstat.log.`date '+%Y%m%d'` 2>&1 &
+
+#meminfo
+ps -ef | grep "./runcmd.sh" | grep -v grep | awk '{print $2}' | xargs kill -9 2>/dev/null
+nohup ./runcmd.sh "cat /proc/meminfo" ${rootdir}/meminfo meminfo.log 2>&1 &
+#nohup ./runcmd.sh "cat /proc/vmstat" ${rootdir}/vmstat vmstat.log 2>&1 &
+
+#clean history log
+find ${rootdir} -maxdepth 1 -type f -mtime +8 | grep monitorlog | xargs ./srmnew 2>/dev/null
+
+#查看监控进程
+#ps -ef | grep -E "iotop|top|dstat|iostat|meminfo|vmstat"
